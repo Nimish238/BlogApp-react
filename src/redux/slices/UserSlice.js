@@ -12,13 +12,10 @@ const UserSlice = createSlice({
             state.user[id] = credentials;
         },
         removeUserDetails(state,action){
-            state.user.clear();
-        },
-        clearState() {
-            return initialState; // Reset state to initial state
+            delete state.user[action.payload];
         }
     }
 })
 
 export default UserSlice.reducer;
-export const{addUserDetails,removeUserDetails,updateUserDetails,clearState} = UserSlice.actions;
+export const{addUserDetails,removeUserDetails,updateUserDetails} = UserSlice.actions;

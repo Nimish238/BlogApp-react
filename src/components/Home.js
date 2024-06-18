@@ -1,14 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import CustomNavbar from './CustomNavbar'
 import { useSelector } from 'react-redux'
-import AuthContext from '../Context/Auth';
+import Cookies from 'js-cookie';
+// import { Container } from 'reactstrap';
+// import AddPost from './AddPost';
 
 
 
 export default function Home() {
-
-  const {status,userId} = useContext(AuthContext);
-
 
 
 
@@ -16,26 +15,23 @@ export default function Home() {
     return (state.userItems).user;
   });
 
-
-//  useEffect (()=>{
-//   console.log(cartObj);
-//   console.log(status);
- 
-//   const u = userId;
-//   console.log(u);
+  const id = Cookies.get('id');
 
 
-//  })
+  useEffect (()=>{
+    console.log(cartObj);
+    console.log(id);
+  });
 
 
   return (  
     <>
     <CustomNavbar></CustomNavbar>
     <h1>This is Home page</h1>
-    
+
+    {/* <Container>
+      <AddPost/>
+    </Container> */}
     </>
-
- 
-
   )
 }

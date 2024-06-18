@@ -1,11 +1,11 @@
-import React, {  useContext, useState } from "react";
+import React, { useState } from "react";
 import { loginApi,register } from "../services/user-service";
 import { useNavigate } from "react-router-dom";
 import CustomNavbar from "./CustomNavbar";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import {addUserDetails} from "../redux/slices/UserSlice";
-import AuthContext from "../Context/Auth";
+import Cookies from "js-cookie";
 
 
 export default function Login() {
@@ -17,7 +17,6 @@ export default function Login() {
     isError:false,
   })
  
-  const {setStatus,setUserId} = useContext(AuthContext);
 
   
   const [loginDetails, setLoginDetails] = useState({
@@ -37,8 +36,6 @@ export default function Login() {
   const toggleLogin = () => {
     setSignUp(false);
   };
-
-
 
   const handleEmail = (e) => {
     setLoginDetails((prev) => {
@@ -68,10 +65,10 @@ export default function Login() {
    
       if (!response.hasError) {
         console.log(response);
-        setStatus(true);     
-        dispatch(addUserDetails(response.data));   
-        setUserId(response.data.id);
-        
+        Cookies.set('isLoggedIn','true');     
+        dispatch(addUserDetails(response.data));  
+        Cookies.set('id',response.data.id);
+        Cookies.set('name',response.data.name); 
         navigate("/");    
       } else {
         console.log("error");
@@ -108,7 +105,6 @@ export default function Login() {
   const handleChange = (event,property) =>{
     //changing dynamically
     setData({...data,[property]:event.target.value})
-
   }
 
 
