@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CustomNavbar from "./CustomNavbar";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import {addUserDetails} from "../redux/slices/UserSlice";
+import {addUserDetails, removeUserDetails} from "../redux/slices/UserSlice";
 import Cookies from "js-cookie";
 
 
@@ -15,19 +15,18 @@ export default function Login() {
   const [error,setError] = useState({
     errors:{},
     isError:false,
-  })
- 
-
+  });
   
   const [loginDetails, setLoginDetails] = useState({
     username: "nimish@gmail.com",
     password: "nimish@123",
   });
+
   const [data,setData] = useState({
     name:'',
     email:'',
     password:'',
-  })
+  });
 
   const toggleSignup = () => {
     setSignUp(true);
@@ -69,7 +68,16 @@ export default function Login() {
         dispatch(addUserDetails(response.data));  
         Cookies.set('id',response.data.id);
         Cookies.set('name',response.data.name); 
-        navigate("/");    
+        Cookies.set('token',response.data.token);
+        navigate("/"); 
+               
+        const timer = 4.5 * 60 * 60 * 1000;
+
+        setTimeout(()=>{
+          dispatch(removeUserDetails(Cookies.get('id')));
+          navigate('/login');
+
+        },timer)
       } else {
         console.log("error");
       }

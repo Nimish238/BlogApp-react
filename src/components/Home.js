@@ -1,14 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState} from 'react'
 import CustomNavbar from './CustomNavbar'
 import { useSelector } from 'react-redux'
 import Cookies from 'js-cookie';
-// import { Container } from 'reactstrap';
-// import AddPost from './AddPost';
-
+import { getAllPosts } from '../services/post-service';
+import { Col,Container,Row,Pagination,PaginationItem,PaginationLink } from 'reactstrap';
+import Post from './Post';
 
 
 export default function Home() {
 
+  const [posts,setPosts] = useState({
+    content:[],
+    totalElements:'',
+    totalPages:'',
+    lastPage:(false),
+    pageNumber:''
+
+  });
 
 
   let cartObj = useSelector((state) =>{
@@ -24,14 +32,78 @@ export default function Home() {
   });
 
 
+
+  useEffect(() =>{
+
+    changePageNumber (0)
+},[]);
+
+const changePageNumber = (pageNumber=0,pageSize=5) =>{
+  if(pageNumber>posts.pageNumber && posts.lastPage){
+    return;
+  }
+
+  if(pageNumber<posts.pageNumber && posts.pageNumber===0){
+    return;
+  }
+
+  getAllPosts(pageNumber,pageSize).then((data) =>{
+    setPosts(data);
+    window.scroll(0,0)
+    console.log(data);
+  }).catch(error =>{
+      console.log(error);
+  })
+}
+
+
+
   return (  
     <>
     <CustomNavbar></CustomNavbar>
-    <h1>This is Home page</h1>
 
-    {/* <Container>
-      <AddPost/>
-    </Container> */}
+    <Container className='mt-3'>
+
+    <div className="container-fluid">
+      <Row>
+        <Col md={{size:10 , offset:1}}>
+
+          {posts &&
+            posts.content.map((postData) =>(
+              <Post key={postData.postId} postData={postData}/>             
+            ))
+          }
+
+          <Pagination className='mt-5'>
+            <PaginationItem disabled = {posts.pageNumber===0} onClick={()=>changePageNumber((posts.pageNumber)-1)}>
+              <PaginationLink >
+                Previous
+              </PaginationLink>
+            </PaginationItem>
+
+             {
+              [...Array(posts.totalPages)].map((item,index) =>(
+                  <PaginationItem onClick={()=>changePageNumber(index)} key={index} active={index === posts.pageNumber}>
+                    <PaginationLink>
+                      {index+1}
+                    </PaginationLink>
+                  </PaginationItem>
+              ))
+             } 
+
+            <PaginationItem disabled={posts.lastPage} onClick={()=>changePageNumber((posts.pageNumber)+1)}>
+              <PaginationLink>
+                Next
+              </PaginationLink>
+            </PaginationItem>
+          </Pagination>
+        </Col>
+      </Row>
+    </div>
+
+
+    </Container>
+    
     </>
   )
 }

@@ -59,9 +59,12 @@ function CustomNavbar(args) {
             <NavItem>
               <NavLink tag={ReactLink} to="/">Home</NavLink>
             </NavItem>
+            {isLoggedIn &&
             <NavItem>
               <NavLink tag={ReactLink} to="/addPost">Add Post</NavLink>
             </NavItem>
+            }
+
             
             
           </Nav>
