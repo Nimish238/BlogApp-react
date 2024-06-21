@@ -28,7 +28,6 @@ const AddPost = () =>{
 
     useEffect(() =>{
         getAllCategories().then((data) =>{
-            console.log(data);
             setCategories(data);
         }).catch(error =>{
             console.log(error);

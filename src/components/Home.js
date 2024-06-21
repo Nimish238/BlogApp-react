@@ -2,12 +2,16 @@ import React, { useEffect,useState} from 'react'
 import CustomNavbar from './CustomNavbar'
 import { useSelector } from 'react-redux'
 import Cookies from 'js-cookie';
-import { getAllPosts } from '../services/post-service';
-import { Col,Container,Row,Pagination,PaginationItem,PaginationLink } from 'reactstrap';
+import { getAllPosts} from '../services/post-service';
+import { Col,Container,Row,Pagination,PaginationItem,PaginationLink} from 'reactstrap';
 import Post from './Post';
+import CategoryComponent from './CategoryComponent';
+
 
 
 export default function Home() {
+
+
 
   const [posts,setPosts] = useState({
     content:[],
@@ -19,42 +23,35 @@ export default function Home() {
   });
 
 
-  let cartObj = useSelector((state) =>{
-    return (state.userItems).user;
-  });
-
-  const id = Cookies.get('id');
 
 
-  useEffect (()=>{
-    console.log(cartObj);
-    console.log(id);
-  });
+  // const id = Cookies.get('id');
+
+
 
 
 
   useEffect(() =>{
-
     changePageNumber (0)
-},[]);
+  },[]);
 
-const changePageNumber = (pageNumber=0,pageSize=5) =>{
-  if(pageNumber>posts.pageNumber && posts.lastPage){
-    return;
+  const changePageNumber = (pageNumber=0,pageSize=5) =>{
+    if(pageNumber>posts.pageNumber && posts.lastPage){
+      return;
+    }
+
+    if(pageNumber<posts.pageNumber && posts.pageNumber===0){
+      return;
+    }
+
+    getAllPosts(pageNumber,pageSize).then((data) =>{
+      setPosts(data);
+      window.scroll(0,0)
+      console.log(data);
+    }).catch(error =>{
+        console.log(error);
+    })
   }
-
-  if(pageNumber<posts.pageNumber && posts.pageNumber===0){
-    return;
-  }
-
-  getAllPosts(pageNumber,pageSize).then((data) =>{
-    setPosts(data);
-    window.scroll(0,0)
-    console.log(data);
-  }).catch(error =>{
-      console.log(error);
-  })
-}
 
 
 
@@ -66,7 +63,14 @@ const changePageNumber = (pageNumber=0,pageSize=5) =>{
 
     <div className="container-fluid">
       <Row>
-        <Col md={{size:10 , offset:1}}>
+
+        <Col md={2} className='border pt-3'>
+        <CategoryComponent/>
+
+        
+        </Col>
+
+        <Col md={{size:9 }}>
 
           {posts &&
             posts.content.map((postData) =>(

@@ -84,9 +84,10 @@ function CustomNavbar(args) {
                   </DropdownToggle>
                   <DropdownMenu end>
                     <DropdownItem>Profile-info</DropdownItem>
-                    <DropdownItem>Reset password</DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem>Reset</DropdownItem>
+                    <DropdownItem>My Posts</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem>Update password</DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </>

@@ -126,6 +126,26 @@ const getPostById = async(postId) =>{
 
 }
 
+
+const getPostByCategory = async(categoryId) =>{
+
+    try{
+        const response = await privateAxios.get(`${baseURL}/category/${categoryId}/posts`);
+
+        if(response && response.data){
+            console.log(response.data);
+            return response.data;
+        }else{
+            throw new Error('No response data');
+        }
+
+    }catch(error){
+        console.error('Error fetching data:',error);
+    }
+
+}
+
+
 const createComment = async(userId,postId,comment) =>{
 
     try{
@@ -144,10 +164,11 @@ const createComment = async(userId,postId,comment) =>{
     }catch(error){
         console.error('Error fetching posts:', error);
     }
-
 }
 
 
 
 
-export {getAllPosts,getPostById,createComment};
+
+
+export {getAllPosts,getPostById,createComment,getPostByCategory};

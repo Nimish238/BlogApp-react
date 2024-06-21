@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import AddPost from './components/AddPost';
 import ReadMorePost from './components/ReadMorePost';
+import Category from './components/Category';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home/>}/>
           <Route path='/addPost' element ={<AddPost/>}/>
           <Route path='/readMore/:postId' element ={<ReadMorePost/>}/>
+          <Route path='/categories/:categoryId' element={<Category/>}/>
 
         </Routes>  
         
