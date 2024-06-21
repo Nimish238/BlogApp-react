@@ -1,73 +1,180 @@
-import React, { useEffect, useState } from 'react'
-import CustomNavbar from './CustomNavbar';
-import { useParams } from 'react-router-dom';
-import { Card, CardBody, CardText, Col, Container, Row } from 'reactstrap';
-import { getPostById } from '../services/post-service';
+import React, { useEffect, useState } from "react";
+import CustomNavbar from "./CustomNavbar";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardText,
+  Col,
+  Container,
+  Input,
+  Row,
+} from "reactstrap";
+import { createComment, getPostById } from "../services/post-service";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
-const ReadMorePost = ()=> {
+const ReadMorePost = () => {
+  const { postId } = useParams();
+  const [post, setPost] = useState(null);
+  const [doComment, setDoComment] = useState({
+    content: "",
+  });
+  const navigate= useNavigate();
+  const baseURL = "http://localhost:8080/api";
+  const doLogIn = Cookies.get('isLoggedIn');
 
-    const {postId} = useParams();
-    const [post,setPost] = useState(null);
-    const baseURL = 'http://localhost:8080/api';
+  useEffect(() => {
+    getPostById(postId)
+      .then((data) => {
+        console.log(data);
+        setPost(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [postId]);
 
-    useEffect (()=>{
+  const printDate = (number) => {
+    return new Date(number).toLocaleString();
+  };
 
-        getPostById(postId).then((data) =>{
-            console.log(data);
-            setPost(data);
-        }).catch(error =>{
-            console.log(error);
-        })
-    },[]);
+  const submitComment = () => {
 
-    const printDate = (number) =>{
-        return new Date(number).toLocaleString();
+    if(!doLogIn){
+        toast.error("Log-in to your account");
+        navigate('/login');
+        return;
     }
+
+    if(doComment.content.trim()===''){
+        return;
+    }
+
+    createComment(post.user.id, post.postId, doComment)
+      .then((data) => {
+        console.log(data);
+
+
+       setPost({
+        ...post,
+        comments:[...post.comments,data]
+       })
+
+        setDoComment({
+            content: ''
+        })
+
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+  };
 
   return (
     <>
-    <CustomNavbar></CustomNavbar>
+      <CustomNavbar></CustomNavbar>
 
-
-    <Container className='mt-4'>
-
+      <Container className="mt-4">
         <Row>
-            <Col md = {{ size : 12}}>
-            <Card className='mt-3 ps-2'>
-                { post &&
+          <Col md={{ size: 12 }}>
+            <Card className="mt-3 ps-2">
+              {post && (
                 <CardBody>
+                  <CardText className="mt-2">
+                    Posted by <b>{post.user.name} </b>on{" "}
+                    <b>{printDate(post.addedDate)}</b>
+                  </CardText>
+                  <CardText>
+                    <span className="text-muted">
+                      {" "}
+                      {post.category.categoryTitle}
+                    </span>
+                  </CardText>
 
-                    <h1 >{post.title}</h1>
-                    
-                    <CardText  dangerouslySetInnerHTML={{__html :post.content}}></CardText>
+                  <div
+                    className="divider"
+                    style={{
+                      width: "100%",
+                      height: "1px",
+                      background: "#000",
+                    }}
+                  ></div>
 
-                    <div className="image-container " >
-                        <img className='img-fluid' src={baseURL+'/post/image/'+post.imageName} style={{maxWidth:'50%',maxHeight:'300px'}}alt="" />
-                    </div>
+                  <h1 className="mt-5">{post.title}</h1>
 
-                    <div className="divider mt-5" style={{
-                         width:'100%',
-                         height:'1px',
-                         background:'#000'
-                    }}>
-                       
-                    </div>
-                    <CardText className='mt-2'>
-                        Posted by <b>{post.user.name} </b>on <b>{printDate(post.addedDate)}</b>
-                    </CardText>
-                    <CardText>
-                        <span className='text-muted'> {post.category.categoryTitle}</span>
-                    </CardText>
+                  <CardText
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                  ></CardText>
+
+                  <div className="image-container ">
+                    <img
+                      className="img-fluid"
+                      src={baseURL + "/post/image/" + post.imageName}
+                      style={{ maxWidth: "50%", maxHeight: "300px" }}
+                      alt=""
+                    />
+                  </div>
+
+                  <CardText className="mt-5" style={{ textAlign: "right" }}>
+                    <span className="text-muted">
+                      {" "}
+                      {post ? post.comments.length : 0} comments
+                    </span>
+                  </CardText>
+                  <div
+                    className="divider mt-0"
+                    style={{
+                      width: "100%",
+                      height: "1px",
+                      background: "#e2e2e2",
+                    }}
+                  ></div>
+
+                  <Row>
+                    <Col md={{ size: 9, offset: 1 }}>
+                      <div style={{ display: "flex" }} className="mt-1">
+                        <Input
+                          type="text"
+                          style={{ borderRadius: "20px" }}
+                          placeholder="Enter comments.."
+                          value={doComment.content}
+                          onChange={(event) =>
+                            setDoComment({ content: event.target.value })
+                          }
+                        />
+                        <Button
+                          onClick={submitComment}
+                          style={{
+                            borderRadius: "20px",
+                            backgroundColor: "#000",
+                          }}
+
+                        >
+                          {" "}
+                          Post
+                        </Button>
+                      </div>
+
+                      {post &&
+                        post.comments.map((c, index) => (
+                          <Card className="mt-2 border-0" key={index}>
+                            <CardBody>
+                              <CardText>{c.content}</CardText>
+                            </CardBody>
+                          </Card>
+                        ))}
+                    </Col>
+                  </Row>
                 </CardBody>
-                }
+              )}
             </Card>
-            </Col>
+          </Col>
         </Row>
-        
-    </Container>
+      </Container>
     </>
-    
-  )
-}
+  );
+};
 
 export default ReadMorePost;

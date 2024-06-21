@@ -75,6 +75,8 @@ export default function Login() {
 
         setTimeout(()=>{
           dispatch(removeUserDetails(Cookies.get('id')));
+          Cookies.remove('isLoggedIn');
+          Cookies.remove('id');
           navigate('/login');
 
         },timer)

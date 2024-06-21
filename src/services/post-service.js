@@ -1,13 +1,30 @@
 import axios from "axios";
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 // import FormData from "form-data";
 
 const baseURL = 'http://localhost:8080/api';
 
 
-// const getToken = () => {
-//     return Cookies.get('token');
-// };
+const getToken = () => {
+    return Cookies.get('token');
+};
+
+    const privateAxios = axios.create({
+        baseURL:baseURL,
+        withCredentials:true
+    });
+    
+    privateAxios.interceptors.request.use(config =>{
+        const token = getToken();
+        console.log('token',token);
+        if(token){
+           
+            config.headers.Authorization = `Bearer ${token}`
+            console.log('config',config);
+            return config
+        }
+        
+    },error =>Promise.reject(error))
 
 
 
@@ -109,7 +126,28 @@ const getPostById = async(postId) =>{
 
 }
 
+const createComment = async(userId,postId,comment) =>{
+
+    try{
+        const url = `${baseURL}/user/${userId}/post/${postId}/comments`;
+        console.log("Requested url:",url);
+        const response = await privateAxios.post(url,comment);
+
+        if(response && response.data){
+            console.log(response.data);
+            return response.data;
+        }
+        else{
+            throw new Error("NO response data");
+        }
+        
+    }catch(error){
+        console.error('Error fetching posts:', error);
+    }
+
+}
 
 
 
-export {getAllPosts,getPostById};
+
+export {getAllPosts,getPostById,createComment};
