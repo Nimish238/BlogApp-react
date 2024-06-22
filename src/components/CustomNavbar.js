@@ -1,5 +1,5 @@
 import React, {  useState } from 'react';
-import { NavLink as ReactLink, useNavigate } from 'react-router-dom';
+import {  NavLink as ReactLink, useNavigate } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -16,7 +16,6 @@ import {
 import { useDispatch } from 'react-redux';
 import { removeUserDetails } from '../redux/slices/UserSlice';
 import Cookies from 'js-cookie';
-
 
 function CustomNavbar(args) {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,9 +36,12 @@ function CustomNavbar(args) {
     dispatch(removeUserDetails(id));
     Cookies.remove('isLoggedIn');
     Cookies.remove('id');
+    Cookies.remove('name');
+    Cookies.remove('token');
     navigate("/login");
 
   }
+
 
   return (
     <div>
@@ -83,9 +85,9 @@ function CustomNavbar(args) {
                     {name}
                   </DropdownToggle>
                   <DropdownMenu end>
-                    <DropdownItem>Profile-info</DropdownItem>
+                    <DropdownItem tag={ReactLink} to={'/profileInfo/'+id}>Profile-info</DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem>My Posts</DropdownItem>
+                    <DropdownItem tag={ReactLink} to={"/userPosts/"+ id} >My Posts</DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem>Update password</DropdownItem>
                   </DropdownMenu>
@@ -101,8 +103,7 @@ function CustomNavbar(args) {
           }
           
           </Nav>
-          
-          {/* <NavbarText>Simple Text</NavbarText> */}
+
         </Collapse>
       </Navbar>
     </div>

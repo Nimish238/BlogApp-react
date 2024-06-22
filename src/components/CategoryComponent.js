@@ -13,7 +13,7 @@ const CategoryComponent= () => {
 
         getAllCategories().then((data) =>{
           console.log(data);
-          setCategories(data);
+          setCategories([...data]);
         }).catch(error =>{
           console.log(error);
         })

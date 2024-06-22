@@ -1,7 +1,7 @@
 import React, { useEffect,useState} from 'react'
 import CustomNavbar from './CustomNavbar'
-import { useSelector } from 'react-redux'
-import Cookies from 'js-cookie';
+// import { useSelector } from 'react-redux'
+// import Cookies from 'js-cookie';
 import { getAllPosts} from '../services/post-service';
 import { Col,Container,Row,Pagination,PaginationItem,PaginationLink} from 'reactstrap';
 import Post from './Post';
@@ -59,16 +59,16 @@ export default function Home() {
     <>
     <CustomNavbar></CustomNavbar>
 
-    <Container className='mt-3'>
+    <Container  className='mt-3'>
 
     <div className="container-fluid">
       <Row>
 
         <Col md={2} className='border pt-3'>
         <CategoryComponent/>
-
-        
         </Col>
+
+
 
         <Col md={{size:9 }}>
 

@@ -145,6 +145,47 @@ const getPostByCategory = async(categoryId) =>{
 
 }
 
+const getPostByUser = async(userId) =>{
+
+    try{
+        const url = `${baseURL}/user/${userId}/posts`;
+        console.log("Requested url:",url);
+        const response = await axios.get(url);
+
+        if(response && response.data){
+            console.log(response.data);
+            return response.data;
+        }
+        else{
+            throw new Error('No response data');
+        }
+    }catch(error){
+        console.log("Error fetching data",error);
+    }
+
+}
+
+const deletePostById = async(postId) =>{
+
+    try{
+        const url = `${baseURL}/posts/${postId}`;
+        console.log("Requested url:"+url);
+    
+        const response = await privateAxios.delete(url);
+    
+        if(response&& response.data){
+            return response.data
+        }
+        else{
+            throw new Error('No response data');
+        }
+    }catch(error){
+        console.log("Error fetching data:",error);
+    }
+}
+
+
+
 
 const createComment = async(userId,postId,comment) =>{
 
@@ -167,8 +208,4 @@ const createComment = async(userId,postId,comment) =>{
 }
 
 
-
-
-
-
-export {getAllPosts,getPostById,createComment,getPostByCategory};
+export {getAllPosts,getPostById,getPostByCategory,getPostByUser,deletePostById,createComment};

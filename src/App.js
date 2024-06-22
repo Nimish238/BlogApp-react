@@ -8,6 +8,8 @@ import { ToastContainer } from 'react-toastify';
 import AddPost from './components/AddPost';
 import ReadMorePost from './components/ReadMorePost';
 import Category from './components/Category';
+import UserPosts from './components/UserPosts';
+import ProfileInfo from './components/ProfileInfo';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path='/addPost' element ={<AddPost/>}/>
           <Route path='/readMore/:postId' element ={<ReadMorePost/>}/>
           <Route path='/categories/:categoryId' element={<Category/>}/>
+          <Route path='/userPosts/:userId' element={<UserPosts/>}/>
+          <Route path='/profileInfo/:userId' element={<ProfileInfo/>}/>
 
         </Routes>  
         

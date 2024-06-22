@@ -64,11 +64,11 @@ export default function Login() {
    
       if (!response.hasError) {
         console.log(response);
-        Cookies.set('isLoggedIn','true');     
+        Cookies.set('isLoggedIn','true',4.5);     
         dispatch(addUserDetails(response.data));  
-        Cookies.set('id',response.data.id);
-        Cookies.set('name',response.data.name); 
-        Cookies.set('token',response.data.token);
+        Cookies.set('id',response.data.id,4.5);
+        Cookies.set('name',response.data.name,4.5); 
+        Cookies.set('token',response.data.token,4.5);
         navigate("/"); 
                
         const timer = 4.5 * 60 * 60 * 1000;
@@ -77,6 +77,8 @@ export default function Login() {
           dispatch(removeUserDetails(Cookies.get('id')));
           Cookies.remove('isLoggedIn');
           Cookies.remove('id');
+          Cookies.remove('name');
+          Cookies.remove('token');
           navigate('/login');
 
         },timer)
