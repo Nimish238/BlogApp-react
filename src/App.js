@@ -10,6 +10,7 @@ import ReadMorePost from './components/ReadMorePost';
 import Category from './components/Category';
 import UserPosts from './components/UserPosts';
 import ProfileInfo from './components/ProfileInfo';
+import UpdateProfile from './components/UpdateProfile';
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
           <Route path='/categories/:categoryId' element={<Category/>}/>
           <Route path='/userPosts/:userId' element={<UserPosts/>}/>
           <Route path='/profileInfo/:userId' element={<ProfileInfo/>}/>
+          <Route path='/updateProfile' element={<UpdateProfile/>}/>
+       
 
         </Routes>  
         

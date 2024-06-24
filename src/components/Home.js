@@ -28,9 +28,6 @@ export default function Home() {
   // const id = Cookies.get('id');
 
 
-
-
-
   useEffect(() =>{
     changePageNumber (0)
   },[]);

@@ -4,10 +4,20 @@ const AuthContext = createContext();
 
 export const Auth = ({ children }) => {
   const [status, setStatus] = useState(false);
-  const [userId,setUserId] = useState(0);
+  const [profileModal,setProfileModal] = useState(false);
+  
+
+  const openProfileModal =()=>{
+      setProfileModal(true);
+  }
+
+  const closeProfileModal = () =>{
+      setProfileModal(false);
+  }
+
 
   return (
-    <AuthContext.Provider value={{ status, setStatus, userId, setUserId }}>
+    <AuthContext.Provider value={{ status, setStatus, openProfileModal, closeProfileModal , profileModal}}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,13 +1,14 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-// import FormData from "form-data";
+
+
 
 const baseURL = 'http://localhost:8080/api';
 
 
-const getToken = () => {
-    return Cookies.get('token');
-};
+    const getToken = () => {
+        return Cookies.get('token');
+    };
 
     const privateAxios = axios.create({
         baseURL:baseURL,
@@ -20,7 +21,6 @@ const getToken = () => {
         if(token){
            
             config.headers.Authorization = `Bearer ${token}`
-            console.log('config',config);
             return config
         }
         
@@ -28,61 +28,26 @@ const getToken = () => {
 
 
 
-// const createPost = async(data) =>{
+    const createPost = async(data) =>{
 
-//     const privateAxios = axios.create({
-//         baseURL:baseURL,
-//         withCredentials:true
-//     });
-    
-//     privateAxios.interceptors.request.use(config =>{
-//         const token = getToken();
-//         console.log('token',token);
-//         if(token){
-           
-//             config.headers.Authorization = `Bearer ${token}`
-//             console.log('config',config);
-//             return config
-//         }
-        
-//     },error =>Promise.reject(error))
+        const userId=data.userId;
+        const categoryId = data.categoryId;
 
-//     try{
-//         const url = `${baseURL}/user/${data.userId}/category/${data.categoryId}/posts`;
-//         console.log("Requested url:",url);
+        const url = `${baseURL}/user/${userId}/category/${categoryId}/posts`;
+        console.log("Requested url:",url);
 
-//         const formData = new FormData();
-//         formData.append('data',JSON.stringify({
-//             'title':data.title,
-//             'content':data.content
-//         }));
-
-//         // formData.append('image',data.image);
-
-//         // for (var pair of formData.entries()) {
-//         //     console.log(pair[0]+ ', ' + pair[1]); 
-//         // }
-
-
-//         const response = await privateAxios.post(url,formData,{
-//             headers:{
-//                 'Content-Type':'multipart/form-data'
-//             }
-//         });
-
-//         console.log('response',response);
-//         if(response&&response.data){
-//             console.log(response.data);
-//             return response.data;
-//         }else{
-//             throw new Error('No response data');
-//         }
-//     }catch(error){
-//         console.error("error fetching data:",error);
-//         throw error;
-//     }
-
-// }
+        return privateAxios.post(url,data.formData,{
+            headers:{
+                'Content-Type':'multipart/form-data'
+            }
+        }).then((response) =>{
+            if(response&&response.data){
+                return response.data;
+            }
+        }).catch((error) =>{
+            console.log(error);
+        })
+    }
 
 
 const getAllPosts = async(pageNumber,pageSize) =>{
@@ -208,4 +173,4 @@ const createComment = async(userId,postId,comment) =>{
 }
 
 
-export {getAllPosts,getPostById,getPostByCategory,getPostByUser,deletePostById,createComment};
+export {createPost,getAllPosts,getPostById,getPostByCategory,getPostByUser,deletePostById,createComment};

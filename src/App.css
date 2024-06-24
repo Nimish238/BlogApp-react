@@ -234,4 +234,38 @@ body{
     }
 }
 
+.modal-wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(125, 122, 122, 0.9);
+    z-index: 11;
+  }
+  
+  .modal-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 50rem;
+    background-color: #ffffff;
+    padding: 1rem 1.4rem;
+    border-radius: 0.5rem;
+  }
+  
+  .modal-wrapper p {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    font-size: 14px;
+  }
+  
+  .modal-wrapper img.modal-img {
+    margin: 0px auto 10px;
+    display: block;
+  }
+
 

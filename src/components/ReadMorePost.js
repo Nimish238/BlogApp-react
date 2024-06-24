@@ -14,6 +14,7 @@ import {
 import { createComment, getPostById } from "../services/post-service";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+// import { getUserById } from "../services/user-service";
 
 const ReadMorePost = () => {
   const { postId } = useParams();
@@ -21,6 +22,7 @@ const ReadMorePost = () => {
   const [doComment, setDoComment] = useState({
     content: "",
   });
+  // const [user,setUser] =useState(null);
   const navigate= useNavigate();
   const baseURL = "http://localhost:8080/api";
   const doLogIn = Cookies.get('isLoggedIn');
@@ -36,9 +38,11 @@ const ReadMorePost = () => {
       });
   }, [postId]);
 
+
   const printDate = (number) => {
     return new Date(number).toLocaleString();
   };
+
 
   const submitComment = () => {
 
@@ -55,7 +59,7 @@ const ReadMorePost = () => {
     createComment(post.user.id, post.postId, doComment)
       .then((data) => {
         console.log(data);
-
+        console.log(data.user_id);
 
        setPost({
         ...post,
@@ -65,12 +69,24 @@ const ReadMorePost = () => {
         setDoComment({
             content: ''
         })
-
       })
+      
       .catch((error) => {
         console.log("Error:", error);
       });
   };
+
+
+
+  // const getId = (userId) =>{
+  //   getUserById(userId).then((data) =>{
+  //     console.log(data);
+  //     setUser(data);
+  // }).catch(error =>{
+  //     console.error("Error fetching data");
+  // }) 
+  // } 
+
 
   return (
     <>
@@ -159,9 +175,10 @@ const ReadMorePost = () => {
 
                       {post &&
                         post.comments.map((c, index) => (
+                          
                           <Card className="mt-2 border-0" key={index}>
                             <CardBody>
-                              <CardText>{c.content}</CardText>
+                              <CardText> {c.content}</CardText>
                             </CardBody>
                           </Card>
                         ))}
