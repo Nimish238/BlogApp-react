@@ -11,10 +11,11 @@ import {
   Input,
   Row,
 } from "reactstrap";
-import { createComment, getPostById } from "../services/post-service";
+import { createComment, deleteComment, getPostById } from "../services/post-service";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 // import { getUserById } from "../services/user-service";
+import { MdDelete } from "react-icons/md";
 
 const ReadMorePost = () => {
   const { postId } = useParams();
@@ -26,6 +27,7 @@ const ReadMorePost = () => {
   const navigate= useNavigate();
   const baseURL = "http://localhost:8080/api";
   const doLogIn = Cookies.get('isLoggedIn');
+  const userId = Cookies.get('id');
 
   useEffect(() => {
     getPostById(postId)
@@ -58,23 +60,38 @@ const ReadMorePost = () => {
 
     createComment(post.user.id, post.postId, doComment)
       .then((data) => {
-        console.log(data);
-        console.log(data.user_id);
-
        setPost({
         ...post,
         comments:[...post.comments,data]
        })
-
         setDoComment({
             content: ''
         })
-      })
-      
-      .catch((error) => {
+      }).catch((error) => {
         console.log("Error:", error);
       });
   };
+
+  const handleDeleteComment = (id) =>{
+
+    const confirm = window.confirm("Are you sure you want to delete the comment?");
+
+    if(confirm){
+      deleteComment(userId,postId,id).then((data) =>{        
+         toast.success(data.message);
+
+        setTimeout(() =>{
+          window.location.reload();
+        },3000)
+      }).catch(error =>{
+        console.log(error);     
+      })
+    }
+    else{
+      toast.error("Comment not deleted!");
+    }
+
+  }
 
 
 
@@ -174,11 +191,12 @@ const ReadMorePost = () => {
                       </div>
 
                       {post &&
-                        post.comments.map((c, index) => (
-                          
+                        post.comments.map((c, index) => (                     
                           <Card className="mt-2 border-0" key={index}>
                             <CardBody>
-                              <CardText> {c.content}</CardText>
+                              <CardText  className="d-flex justify-content-between align-items-center"> 
+                                {c.content} <button className="btn btn-danger px-1" onClick={() =>handleDeleteComment(c.id)} ><MdDelete style={{fontSize:"25px"}}/></button>
+                              </CardText>
                             </CardBody>
                           </Card>
                         ))}

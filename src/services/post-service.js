@@ -172,5 +172,26 @@ const createComment = async(userId,postId,comment) =>{
     }
 }
 
+const deleteComment = async(userId,postId,commentId) =>{
 
-export {createPost,getAllPosts,getPostById,getPostByCategory,getPostByUser,deletePostById,createComment};
+    try{
+        const url = `${baseURL}/user/${userId}/post/${postId}/comments/${commentId}`;
+        console.log("Requested url:",url);
+
+        const response = await privateAxios.delete(url);
+        if(response && response.data){
+            console.log(response.data);
+            return response.data;
+        }
+        else{
+            throw new Error("NO response data");
+        }
+
+    }catch(error){
+        console.error('Error fetching posts:', error);
+    }
+
+}
+
+
+export {createPost,getAllPosts,getPostById,getPostByCategory,getPostByUser,deletePostById,createComment,deleteComment};
