@@ -31,6 +31,8 @@ function CustomNavbar(args) {
 
   const name = Cookies.get('name');
 
+  const role = Cookies.get('role')==='ROLE_ADMIN';
+
   const logOut = () =>{
 
     dispatch(removeUserDetails(id));
@@ -38,8 +40,8 @@ function CustomNavbar(args) {
     Cookies.remove('id');
     Cookies.remove('name');
     Cookies.remove('token');
+    Cookies.remove("role");
     navigate("/login");
-
   }
 
 
@@ -88,8 +90,14 @@ function CustomNavbar(args) {
                     <DropdownItem tag={ReactLink} to={'/profileInfo/'+id}>Profile-info</DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem tag={ReactLink} to={"/userPosts/"+ id} >My Posts</DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>Update password</DropdownItem>
+                    
+                    {role &&
+                    <>
+                      <DropdownItem divider />
+                      <DropdownItem tag={ReactLink} to="/allUsers">All users</DropdownItem>
+                    </>
+                    }
+                    
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </>

@@ -3,7 +3,7 @@ import CustomNavbar from "./CustomNavbar";
 import Cookies from "js-cookie";
 import { getPostByUser } from "../services/post-service";
 import Post from "./Post";
-import { Col, Row } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 
 const UserPosts = () =>{
 
@@ -25,22 +25,23 @@ const UserPosts = () =>{
         <>
         <CustomNavbar></CustomNavbar>
 
-        <Row>
-            <Col md={2} className='border pt-3'>
 
-            </Col >
-            <Col md={9}>
+
+    <Container>
+        <Row>
+            <Col >
                 {
                     posts && 
                     posts.map((postData) =>{
                         return(
                             <Post  key={postData.postId} postData={postData}/>
-                        )
-                        
+                        )        
                     })
                 }
             </Col>
         </Row>
+    </Container>
+
 
         </>
        

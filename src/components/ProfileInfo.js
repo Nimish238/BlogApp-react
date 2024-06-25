@@ -23,12 +23,13 @@ const ProfileInfo = () => {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
   const id = Cookies.get("id");
+  const role = Cookies.get('role');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
 
   const updateProfile = () =>{
-    navigate('/updateProfile');
+    navigate('/updateProfile/'+userId);
   }
 
   useEffect(() => {
@@ -48,6 +49,7 @@ const ProfileInfo = () => {
     Cookies.remove("id");
     Cookies.remove("name");
     Cookies.remove("token");
+    Cookies.remove("role");
     navigate("/login");
   };
 
@@ -61,6 +63,7 @@ const ProfileInfo = () => {
         .then((data) => {
           console.log(data);
           toast.success(data.message);
+
           setTimeout(() => {
             logOut();
           }, 3000);
@@ -102,6 +105,11 @@ const ProfileInfo = () => {
                     <th>Email</th>
                     <th>{user.email}</th>
                   </tr>
+                  <tr>
+                    <th>Role</th>
+                    <th>{role}</th>
+                  </tr>
+
                 </tbody>
               </Table>
               {id === userId && (

@@ -46,7 +46,7 @@ const Category = () =>{
                                     <Post key={postData.postId} postData={postData}/>  
                                 )                       
                             }) 
-                        }  
+                    }  
                     </Col>
                 </Row>
 

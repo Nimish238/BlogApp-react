@@ -52,14 +52,12 @@ function Post({postData = {title:"This is default title",content : "This is defa
 
     return(
         <>
-        
-
-          
+                  
             <Card className="border-0 shadow mt-3">
                 <CardBody>
         
                     <h1 className="mt-3">{postData.title}</h1>
-                    <CardText dangerouslySetInnerHTML={{__html :postData.content.substring(0,60)+"..."}}>
+                    <CardText dangerouslySetInnerHTML={{__html :postData.content.substring(0,30)+"..."}}>
                     </CardText>
                     <div className="image-container " >
                         <img className='img-fluid' src={baseURL+'/post/image/'+postData.imageName} style={{maxWidth:'50%',maxHeight:'300px'}}alt="" />

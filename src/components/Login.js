@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { loginApi,register } from "../services/user-service";
 import { useNavigate } from "react-router-dom";
 import CustomNavbar from "./CustomNavbar";
@@ -6,10 +6,12 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import {addUserDetails, removeUserDetails} from "../redux/slices/UserSlice";
 import Cookies from "js-cookie";
+import AuthContext from "../Context/Auth";
 
 
 export default function Login() {
   const navigate = useNavigate();
+  const {setStatus} = useContext(AuthContext);
   const [signUp, setSignUp] = useState(false);
   const dispatch = useDispatch();
   const [error,setError] = useState({
@@ -69,6 +71,8 @@ export default function Login() {
         Cookies.set('id',response.data.id,4.5);
         Cookies.set('name',response.data.name,4.5); 
         Cookies.set('token',response.data.token,4.5);
+        Cookies.set('role',response.data.role[0].authority);
+        setStatus(true);
         navigate("/"); 
                
         const timer = 4.5 * 60 * 60 * 1000;
@@ -84,6 +88,7 @@ export default function Login() {
         },timer)
       } else {
         console.log("error");
+        setStatus(false);
       }
     }   
     catch(error){

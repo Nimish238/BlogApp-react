@@ -11,6 +11,8 @@ import Category from './components/Category';
 import UserPosts from './components/UserPosts';
 import ProfileInfo from './components/ProfileInfo';
 import UpdateProfile from './components/UpdateProfile';
+import AllUsers from './components/AllUsers';
+import AuthGuard from './Context/AuthGuard';
 
 function App() {
   return (
@@ -22,12 +24,13 @@ function App() {
 
           <Route path="/login" element={<Login/>}/>
           <Route path="/" element={<Home/>}/>
-          <Route path='/addPost' element ={<AddPost/>}/>
-          <Route path='/readMore/:postId' element ={<ReadMorePost/>}/>
-          <Route path='/categories/:categoryId' element={<Category/>}/>
-          <Route path='/userPosts/:userId' element={<UserPosts/>}/>
-          <Route path='/profileInfo/:userId' element={<ProfileInfo/>}/>
-          <Route path='/updateProfile' element={<UpdateProfile/>}/>
+          <Route path='/addPost' element ={<AuthGuard><AddPost/></AuthGuard>}/>
+          <Route path='/readMore/:postId' element ={<AuthGuard> <ReadMorePost/></AuthGuard>}/>
+          <Route path='/categories/:categoryId' element={<AuthGuard><Category/></AuthGuard>}/>
+          <Route path='/userPosts/:userId' element={<AuthGuard><UserPosts/></AuthGuard>}/>
+          <Route path='/profileInfo/:userId' element={<AuthGuard> <ProfileInfo/></AuthGuard>}/>
+          <Route path='/updateProfile/:userId' element={<AuthGuard><UpdateProfile/> </AuthGuard>}/>
+          <Route path='/allUsers' element={<AuthGuard><AllUsers/> </AuthGuard>}/>
        
 
         </Routes>  

@@ -6,30 +6,53 @@ import {
   CardFooter,
   Col,
   Container,
+  Form,
+  FormGroup,
+  Input,
   Row,
   Table,
 } from "reactstrap";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { getUserById } from "../services/user-service";
+import { useParams } from "react-router-dom";
+import CustomNavbar from "./CustomNavbar";
 
 const UpdateProfile = () => {
 
-  const id = Cookies.get('id');
-  const [user,setUser] = useState(null);
+  const {userId} = useParams();
+  const [user,setUser] = useState({
+    name:'',
+    email:''
+  });
 
   useEffect(() =>{
 
-    getUserById(id).then((data) =>{
-      setUser(data);
+    getUserById(userId).then((data) =>{
+      setUser({
+        name:data.name,
+        email:data.email,
+      });
+
     }).catch(error =>{
       console.error(error);
     })
 
-  },[id])
+  },[userId])
+
+  const handleChange = (event)=>{
+    setUser({...user,[event.target.name]:event.target.value})
+    console.log({...user,[event.target.name]:event.target.value})
+  }
+
+  const handleSubmit = () =>{
+  
+
+  }
   
 
   return (
     <>
+    <CustomNavbar/>
       <Row className="mt-5">
         <Col md={{ size: 8, offset: 2 }}>
           <Card className="shadow">
@@ -44,23 +67,52 @@ const UpdateProfile = () => {
                 />
               </Container>
 
+
+
+              <Form onSubmit={handleSubmit}>
+                
+              
               <Table hover bordered className="mt-5 text-center" responsive>
                 <tbody>
                   <tr>
                     <th> User Name </th>
-                    <th>{user.name}</th>
+
+                    <td>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="name"
+                          defaultValue={user.name}
+                          onChange={handleChange}
+                          required
+                        />                        
+                      </FormGroup> 
+                     </td>
                   </tr>
-                  <tr>
+                  <tr>  
                     <th>Email</th>
-                    <th>{user.email}</th>
+                    
+                    <td>
+                      <FormGroup>
+                        <Input
+                          type="email"
+                          name="email"
+                          defaultValue={user.email}
+                          onChange={handleChange}
+                          required
+                        />                        
+                      </FormGroup> 
+                    </td>
                   </tr>
                 </tbody>
               </Table>
               <CardFooter className="text-center">
-                <Button className="btn btn-warning">
+                <Button className="btn btn-warning" type="submit">
                   Update
                   </Button>
               </CardFooter>
+
+            </Form>
               
             </CardBody>
           </Card>

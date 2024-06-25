@@ -100,8 +100,24 @@ const deleteUserById = async(userId) =>{
     }catch(error){
         console.log("Error fetching data:",error);
     }
-
-
 }
 
-export {loginApi,register,getUserById,deleteUserById};
+const getAllUsers = async() =>{
+    try{
+        const url = `${baseURL}/users/getAllUsers/`
+        console.log("Requested url:",url);
+
+        const response = await privateAxios.get(url);
+        if(response && response.data){
+            return response.data;
+        }
+        else{
+            throw new Error("No response data");
+        }
+    }
+    catch(error){
+        console.log("Error fetching data:",error);
+    }
+}
+
+export {loginApi,register,getUserById,deleteUserById,getAllUsers};
