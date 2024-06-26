@@ -139,11 +139,56 @@ const deletePostById = async(postId) =>{
         const response = await privateAxios.delete(url);
     
         if(response&& response.data){
-            return response.data
+            return response.data;
         }
         else{
             throw new Error('No response data');
         }
+    }catch(error){
+        console.log("Error fetching data:",error);
+    }
+}
+
+const updatePost = async(data) =>{
+    try{
+        const postId=data.postId;
+        const url = `${baseURL}/posts/${postId}`;
+        console.log("Requested url:",url);
+
+        const response = await privateAxios.put(url,data.post);
+
+        if(response && response.data){
+            return response.data;
+        }
+        else{
+            throw new Error('No response data');
+        }
+    }catch(error){
+        console.log("Error fetching data:",error);
+    }
+}
+
+const uploadPostImage = async(data) =>{
+
+    
+    try{
+        
+        const postId = data.postId;
+        const url = `${baseURL}/post/image/upload/${postId}`;
+        console.log("Requested url:",url);
+
+        return privateAxios.post(url,data.formData,{
+            headers:{
+                'Content-Type':'multipart/form-data'
+            }
+        }).then((response) =>{
+            if(response&&response.data){
+                return response.data;
+            }
+        }).catch((error) =>{
+            console.log(error);
+        })
+
     }catch(error){
         console.log("Error fetching data:",error);
     }
@@ -184,14 +229,15 @@ const deleteComment = async(userId,postId,commentId) =>{
             return response.data;
         }
         else{
-            throw new Error("NO response data");
+            throw new Error("No response data");
         }
 
     }catch(error){
         console.error('Error fetching posts:', error);
     }
-
 }
 
 
-export {createPost,getAllPosts,getPostById,getPostByCategory,getPostByUser,deletePostById,createComment,deleteComment};
+
+
+export {createPost,getAllPosts,getPostById,getPostByCategory,getPostByUser,deletePostById,updatePost,uploadPostImage,createComment,deleteComment};

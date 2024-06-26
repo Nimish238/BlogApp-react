@@ -14,6 +14,7 @@ import UpdateProfile from './components/UpdateProfile';
 import AllUsers from './components/AllUsers';
 import AuthGuard from './Context/AuthGuard';
 
+
 function App() {
   return (
     <Router>
@@ -32,7 +33,6 @@ function App() {
           <Route path='/updateProfile/:userId' element={<AuthGuard><UpdateProfile/> </AuthGuard>}/>
           <Route path='/allUsers' element={<AuthGuard><AllUsers/> </AuthGuard>}/>
        
-
         </Routes>  
         
       </div>

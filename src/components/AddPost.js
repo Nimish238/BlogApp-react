@@ -42,18 +42,18 @@ const AddPost = () =>{
     const submitPost = async(event) =>{
         event.preventDefault();
 
-        if(postData.title.trim ===''){
+        if(postData.title.trim() ===''){
             toast.error("title is required");
             return;
         }
 
-        if(postData.content.trim ===''){
+        if(postData.content.trim() ===''){
             toast.error("content is required");
             return;
         }
 
-        if(categoryId.trim ===''){
-            toast.error("category is required");
+        if(categoryId.trim() ===''){
+            toast.error("Please select category");
             return;
         }
 
@@ -141,7 +141,7 @@ const AddPost = () =>{
                             onChange={(e) =>{setImage(e.target.files[0])}}
                         />
                         <FormText>
-                            Image size should be less then 5MB!
+                            Image size should be less then 10MB!
                         </FormText>
                         </div>
 

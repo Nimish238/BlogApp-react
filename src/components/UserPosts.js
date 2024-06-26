@@ -27,20 +27,20 @@ const UserPosts = () =>{
 
 
 
-    <Container>
-        <Row>
-            <Col >
-                {
-                    posts && 
-                    posts.map((postData) =>{
-                        return(
-                            <Post  key={postData.postId} postData={postData}/>
-                        )        
-                    })
-                }
-            </Col>
-        </Row>
-    </Container>
+        <Container>
+            <Row>
+                <Col >
+                    {
+                        posts && 
+                        posts.map((postData) =>{
+                            return(
+                                <Post  key={postData.postId} postData={postData}/>
+                            )        
+                        })
+                    }
+                </Col>
+            </Row>
+        </Container>
 
 
         </>
