@@ -120,4 +120,39 @@ const getAllUsers = async() =>{
     }
 }
 
-export {loginApi,register,getUserById,deleteUserById,getAllUsers};
+const updateUser = async(user) =>{
+    try{
+        const url = `${baseURL}/users/updateUser`;
+        console.log("Requested url:",url);
+
+        const response = await privateAxios.put(url,user);
+        if(response && response.data){
+            return response.data;
+        }
+        else{
+            throw new Error("No response data");
+        }
+
+    }catch(error){
+        console.log("Error fetching data:",error);
+    }
+}
+
+const updateUserPassword = async(user) =>{
+    try{
+        const url = `${baseURL}/users/updateUser`;
+        console.log("Requested url:",url);
+
+        const response = await axios.post(url,user);
+        if(response && response.data){
+            return response.data;
+        }
+        else{
+            throw new Error("No response data");
+        }
+    }catch(error){
+        console.log("Error fetching data:",error);
+    }
+}
+
+export {loginApi,register,getUserById,deleteUserById,getAllUsers,updateUser,updateUserPassword};

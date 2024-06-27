@@ -10,9 +10,9 @@ import ReadMorePost from './components/ReadMorePost';
 import Category from './components/Category';
 import UserPosts from './components/UserPosts';
 import ProfileInfo from './components/ProfileInfo';
-import UpdateProfile from './components/UpdateProfile';
 import AllUsers from './components/AllUsers';
 import AuthGuard from './Context/AuthGuard';
+import UpdatePassword from './components/UpdatePassword';
 
 
 function App() {
@@ -30,8 +30,8 @@ function App() {
           <Route path='/categories/:categoryId' element={<AuthGuard><Category/></AuthGuard>}/>
           <Route path='/userPosts/:userId' element={<AuthGuard><UserPosts/></AuthGuard>}/>
           <Route path='/profileInfo/:userId' element={<AuthGuard> <ProfileInfo/></AuthGuard>}/>
-          <Route path='/updateProfile/:userId' element={<AuthGuard><UpdateProfile/> </AuthGuard>}/>
           <Route path='/allUsers' element={<AuthGuard><AllUsers/> </AuthGuard>}/>
+          <Route path='/updatePassword' element={<AuthGuard><UpdatePassword/></AuthGuard>}/>
        
         </Routes>  
         

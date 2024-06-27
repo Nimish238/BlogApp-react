@@ -90,6 +90,9 @@ function CustomNavbar(args) {
                     <DropdownItem tag={ReactLink} to={'/profileInfo/'+id}>Profile-info</DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem tag={ReactLink} to={"/userPosts/"+ id} >My Posts</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem tag={ReactLink} to="/updatePassword" >Update Password</DropdownItem>
+
                     
                     {role &&
                     <>

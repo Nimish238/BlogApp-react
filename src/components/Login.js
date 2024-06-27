@@ -66,16 +66,16 @@ export default function Login() {
    
       if (!response.hasError) {
         console.log(response);
-        Cookies.set('isLoggedIn','true',4.5);     
+        Cookies.set('isLoggedIn','true',4/24);     
         dispatch(addUserDetails(response.data));  
-        Cookies.set('id',response.data.id,4.5);
-        Cookies.set('name',response.data.name,4.5); 
-        Cookies.set('token',response.data.token,4.5);
-        Cookies.set('role',response.data.role[0].authority);
+        Cookies.set('id',response.data.id,4/24);
+        Cookies.set('name',response.data.name,4/24); 
+        Cookies.set('token',response.data.token,4/24);
+        Cookies.set('role',response.data.role[0].authority,4/24);
         setStatus(true);
         navigate("/"); 
                
-        const timer = 4.5 * 60 * 60 * 1000;
+        const timer = 4 * 60 * 60 * 1000;
 
         setTimeout(()=>{
           dispatch(removeUserDetails(Cookies.get('id')));
