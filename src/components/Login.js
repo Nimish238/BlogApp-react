@@ -71,6 +71,7 @@ export default function Login() {
         Cookies.set('id',response.data.id,4/24);
         Cookies.set('name',response.data.name,4/24); 
         Cookies.set('token',response.data.token,4/24);
+        Cookies.set('email',response.data.username);
         Cookies.set('role',response.data.role[0].authority,4/24);
         setStatus(true);
         navigate("/"); 

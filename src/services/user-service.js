@@ -140,7 +140,7 @@ const updateUser = async(user) =>{
 
 const updateUserPassword = async(user) =>{
     try{
-        const url = `${baseURL}/users/updateUser`;
+        const url = `${baseURL}/auth/resetPassword`;
         console.log("Requested url:",url);
 
         const response = await axios.post(url,user);
