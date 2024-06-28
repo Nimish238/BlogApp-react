@@ -33,7 +33,7 @@ const AllUsers = () =>{
                     User Email
                 </th>
                 <th>
-                    Password
+                    Encoded Password
                 </th>
                 </tr>
             </thead>

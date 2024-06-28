@@ -134,14 +134,17 @@ const ReadMorePost = () => {
                       background: "#000",
                     }}
                   ></div>
+                  
 
                   <h1 className="mt-5">{post.title}</h1>
+                  <br/>
 
                   <CardText
                     dangerouslySetInnerHTML={{ __html: post.content }}
                   ></CardText>
+                  <br/>
 
-                  <div className="image-container ">
+                  <div className="image-container text-center">
                     <img
                       className="img-fluid"
                       src={baseURL + "/post/image/" + post.imageName}

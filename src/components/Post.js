@@ -152,9 +152,10 @@ function Post({postData = {title:"This is default title",content : "This is defa
                 <CardBody>
         
                     <h1 className="mt-3">{postData.title}</h1>
+                    <br/>
                     <CardText dangerouslySetInnerHTML={{__html :postData.content.substring(0,30)+"..."}}>
                     </CardText>
-                    <div className="image-container " >
+                    <div className="image-container text-center" >
                         <img className='img-fluid' src={baseURL+'/post/image/'+postData.imageName} style={{maxWidth:'50%',maxHeight:'300px'}}alt="" />
                     </div>
                     <div className="mt-5">

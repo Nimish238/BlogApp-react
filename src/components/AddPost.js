@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { createPost } from "../services/post-service";
 import Cookies from "js-cookie";
 import FormData from "form-data";
+import { useNavigate } from "react-router-dom";
 
 const AddPost = () =>{
 
@@ -18,6 +19,7 @@ const AddPost = () =>{
     const [categoryId,setCategoryId] = useState(0);
 
     const editor = useRef(null);
+    const navigate = useNavigate();
  
     const [categories,setCategories] = useState([]);
 
@@ -75,6 +77,8 @@ const AddPost = () =>{
                 })
                 setCategoryId(0);
                 toast.success("Post Created successfully");
+                navigate(0);
+                
             }
             else{
                 console.log("Error");
